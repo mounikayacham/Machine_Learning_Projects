@@ -1,3 +1,4 @@
+#import required modules
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
@@ -7,6 +8,7 @@ from sklearn.metrics import *
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.svm import SVR
+#Read the dataset
 df=pd.read_csv('C:/Users/Lenovo/Documents/PANDAS/datasets/job_placement.csv')
 print(df.head())
 print(df.info())
@@ -16,6 +18,7 @@ print(df.isnull().sum())
 print(df.columns)
 print(df.dtypes)
 print(df.duplicated().sum())
+#Data Preprocessing
 from sklearn.preprocessing import LabelEncoder
 l=LabelEncoder()
 df['name']=l.fit_transform(df['name'])
@@ -31,6 +34,7 @@ df.columns=df.columns.str.strip()
 print(df.isnull().sum())
 df=df.fillna(df.mean())
 print(df.isnull().sum())
+#Splitting the Data into Train,test data
 X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.2,random_state=42)
 model=RandomForestRegressor()
 model.fit(X_train,y_train)
@@ -46,6 +50,7 @@ features = pd.DataFrame({"Feature": X.columns, "Importance": importance})
 features.sort_values(by="Importance", ascending=False).plot(kind="bar", x="Feature")
 plt.title("Feature Importance")
 plt.show()
+#All Available models for this dataset and Problem Statement
 models={
     'RandomForestRegressor':RandomForestRegressor(),
     'DecisionTreeRegressor':DecisionTreeRegressor(),
@@ -53,6 +58,8 @@ models={
     'KNeighborsRegressor':KNeighborsRegressor(),
     'LinearRegression':LinearRegression()
 }
+#All Evaluation Models for all the datasets to find the which is better or accurate from all the availble models
+
 for name,model in models.items():
 
     model.fit(X_train,y_train)
@@ -66,9 +73,13 @@ for name,model in models.items():
 import joblib
 model=LinearRegression()
 model.fit(X_train,y_train)
+#Save the Model
 joblib.dump(model,'Jobplacement.pkl')
+#Load the Model
 loaded=joblib.load('Jobplacement.pkl')
+#predict the Output From the trained model
 sample_data = X_test[0:5]  # Example sample data
 predictions = loaded.predict(sample_data)
 print("Predictions on sample data:", predictions)
+
 
