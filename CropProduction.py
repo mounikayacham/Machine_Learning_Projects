@@ -40,5 +40,9 @@ for name,model in models.items():
     print('R2 score :',r2_score(y_test,y_pred))
     print('mean_absolute_error :',mean_absolute_error(y_test,y_pred))
     print('mean_squuared_error:',mean_squared_error(y_test,y_pred))
+    
 import joblib
 joblib.dump(model, 'Crop_production_model.pkl')
+new=X[:5]
+pred=load.predict(new)
+print(pred)
